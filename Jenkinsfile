@@ -24,5 +24,13 @@ pipeline {
                 }
             }
         }
+
+        stage ('Cleanup') {
+            steps {
+                script {
+                    sh "docker rmi $registry:$VERSION.$BUILD_NUMBER"
+                }
+            }
+        }
     }
 }
