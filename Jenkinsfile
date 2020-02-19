@@ -16,7 +16,7 @@ pipeline {
                 echo 'Build the docker image'
 
                 script {
-                    docker.build registry + ":$BUILD_NUMBER"
+                    sh 'docker run hello-world'
                 }
             }
         }
