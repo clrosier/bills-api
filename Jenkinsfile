@@ -1,12 +1,18 @@
 pipeline {
-
     environment {
         registry = "clrosier/bills-api"
         registryCredential = 'dockerhub'
     }
 
-    node {
-        def image = docker.build registry
-        sh 'docker image ls'
+    agent any
+
+    stages {
+        stage ('Building image') {
+            steps {
+                script {
+                    docker.build registry + ":$BUILD_NUMBER"
+                }
+            }
+        }
     }
 }
