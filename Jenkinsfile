@@ -1,22 +1,34 @@
 pipeline {
-
     environment {
         registry = "clrosier/bills-api"
         registryCredential = 'dockerhub'
     }
 
-    agent {
-        docker {
-            image 'docker:dind'
-        }
-    }
-    stages {
-        stage ('Build') {
-            steps {
-                echo 'Build the docker image'
+    agent any
 
+    stages {
+        stage ('Building image') {
+            steps {
                 script {
-                    sh 'docker run hello-world'
+                    image = docker.build registry + ":$VERSION.$BUILD_NUMBER"
+                }
+            }
+        }
+
+        stage ('Push image') {
+            steps {
+                script {
+                    docker.withRegistry('', registryCredential) {
+                        image.push()
+                    }
+                }
+            }
+        }
+
+        stage ('Cleanup') {
+            steps {
+                script {
+                    sh "docker rmi $registry:$VERSION.$BUILD_NUMBER"
                 }
             }
         }
