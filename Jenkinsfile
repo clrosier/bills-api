@@ -10,7 +10,17 @@ pipeline {
         stage ('Building image') {
             steps {
                 script {
-                    docker.build registry + ":$BUILD_NUMBER"
+                    image = docker.build registry + ":$VERSION.$BUILD_NUMBER"
+                }
+            }
+        }
+
+        stage ('Push image') {
+            steps {
+                script {
+                    docker.withRegistry('', registryCredential) {
+                        image.push()
+                    }
                 }
             }
         }
