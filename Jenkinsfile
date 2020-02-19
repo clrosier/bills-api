@@ -11,10 +11,13 @@ pipeline {
         }
     }
     stages {
-        stage ('Checkout') {
+        stage ('Build') {
             steps {
-                echo 'Checkout out code from GitHub...'
+                echo 'Build the docker image'
 
+                script {
+                    docker.build registry + ":$BUILD_NUMBER"
+                }
             }
         }
     }
