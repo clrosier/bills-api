@@ -24,7 +24,8 @@ COPY --from=dependencies /bills-api/requirements.txt ./
 COPY --from=dependencies /root/.cache /root/.cache
 
 # Install app dependencies
-RUN apk add gcc libffi-dev musl-dev && \
+RUN apk add --no-cache postgresql-libs && \
+    apk add --no-cache --virtual .build-deps gcc libffi-dev musl-dev postgresql-dev && \
     pip install -r requirements.txt && \
     apk del gcc libffi-dev musl-dev
 
