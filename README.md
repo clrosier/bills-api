@@ -19,11 +19,28 @@ docker build -t bills-api .
 # Run the image as a container
 docker run -d \
     --rm \
+    --name bills-api \
     -p 5000:5000 \
     -e BILLS_API_DB_URL=ip_of_postgres_db \
     -e BILLS_API_DB_USER=my-user \
     -e BILLS_API_DB_PASS=my-admin-password \
     -e BILLS_API_DB_PORT=5432 \
     bills-api
+```
 
+### Option 2: Pull from Dockerhub
+```bash
+# Grab simage
+docker pull clrosier/bills-api
+
+# Run the image as a container
+docker run -d \
+    --rm \
+    --name bills-api \
+    -p 5000:5000 \
+    -e BILLS_API_DB_URL=ip_of_postgres_db \
+    -e BILLS_API_DB_USER=my-user \
+    -e BILLS_API_DB_PASS=my-admin-password \
+    -e BILLS_API_DB_PORT=5432 \
+    bills-api
 ```
