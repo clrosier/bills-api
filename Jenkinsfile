@@ -30,6 +30,7 @@ pipeline {
             steps {
                 script {
                     sh "docker rmi $registry:$VERSION.$BUILD_NUMBER"
+                    sh "docker rmi $registry:latest"
                 }
             }
         }
