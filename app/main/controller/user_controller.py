@@ -23,7 +23,7 @@ class UserList(Resource):
     def post(self):
         """Creates a new User """
         data = request.json
-        return save_new_user(data=data)
+        return save_new_user(data=data), {'Access-Control-Allow-Origin': '*'}
 
 
 @api.route('/<public_id>')
